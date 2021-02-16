@@ -1,0 +1,18 @@
+
+.form{
+    margin: 00%;
+    padding: 12%;
+}
+.box{
+    display: flex;
+   /*align-items:center;*/
+   text-align: center; 
+   width: 319px;
+    margin-inline: auto;
+    padding: 7px;
+    
+
+}
+.image{
+    margin-left: 87px;
+}

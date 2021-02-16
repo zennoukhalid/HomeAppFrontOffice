@@ -1,0 +1,11 @@
+.center{
+    text-align: center;
+}
+.iconPlus{
+    font: size 70px;
+}
+.card{
+   width: 330px;
+   height: 540px;
+   padding:20px;
+}
