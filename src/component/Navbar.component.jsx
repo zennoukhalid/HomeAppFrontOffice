@@ -3,6 +3,7 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/
 import User from './User.component'
 import { Link, Route, Switch } from 'react-router-dom';
 import AddUser from './AddUser.component';
+import EditUser from './EditUser.component';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
@@ -11,14 +12,14 @@ function NavBar(){
         return (
 
   <Layout>
-    <Header className="header">
-      <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+    {/* <Header className="header"> */}
+      {/* <div className="logo" /> */}
+      {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
         <Menu.Item key="1">nav 1</Menu.Item>
         <Menu.Item key="2">nav 2</Menu.Item>
         <Menu.Item key="3">nav 3</Menu.Item>
-      </Menu>
-    </Header>
+      </Menu> */}
+    {/* </Header> */}
     <Layout>
       <Sider width={200} className="site-layout-background">
         <Menu
@@ -28,18 +29,18 @@ function NavBar(){
           style={{ height: '100%', borderRight: 0 }}
         >
           <SubMenu key="sub1" icon={<UserOutlined />} title="Administration">
-            <Menu.Item key="1"><Link to="/users"></Link> Utilisateurs</Menu.Item>
-            <Menu.Item key="2"><Link to="/addUser"></Link> Ajouter un utilisateur</Menu.Item>
-            <Menu.Item key="3">option3</Menu.Item>
-            <Menu.Item key="4">option4</Menu.Item>
+            <Menu.Item key="1"><Link to="/users"></Link> Users</Menu.Item>
+            <Menu.Item key="2"><Link to="/addUser"></Link> Add User</Menu.Item>
+            {/* <Menu.Item key="3">option3</Menu.Item>
+            <Menu.Item key="4">option4</Menu.Item> */}
           </SubMenu>
-          <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
+          <SubMenu key="sub2" icon={<LaptopOutlined />} title="Activities">
             <Menu.Item key="5">option5</Menu.Item>
             <Menu.Item key="6">option6</Menu.Item>
             <Menu.Item key="7">option7</Menu.Item>
             <Menu.Item key="8">option8</Menu.Item>
           </SubMenu>
-          <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
+          <SubMenu key="sub3" icon={<NotificationOutlined />} title="Advertisements">
             <Menu.Item key="9">option9</Menu.Item>
             <Menu.Item key="10">option10</Menu.Item>
             <Menu.Item key="11">option11</Menu.Item>
@@ -58,7 +59,7 @@ function NavBar(){
              <Switch>
            <Route path="/users" exact component={User} /> 
            <Route path="/addUser" exact component={AddUser} /> 
-           {/* <Route path="/EditUser/:id" exact component={EditUser} />  */}
+           <Route path="/EditUser/:id" exact component={EditUser} /> 
             </Switch>
             
         </Content>

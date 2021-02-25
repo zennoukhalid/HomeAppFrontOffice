@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { adduser } from '../services/ServiceAdduser';
 import history from '../history';
 import { Input,Select } from 'antd';
+import axios from 'axios';
 const { Option } = Select;
 
 
 
-export default function AddUser(props) {
+export default function EditUser(props) {
     const [firstName, setFirsName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function AddUser(props) {
     const [role, setRole] = useState("");
     const [roles, setRoles] = useState(["Admin","User"]);
     const [urlPhoto, setUrlPhoto] = useState("");
+    const [users, setUsers]= useState([])
 
     const [firstNameEror, setFirsNameEror] = useState("");
     const [lastNameEror, setLastNameEror] = useState("");
@@ -21,7 +23,26 @@ export default function AddUser(props) {
     const [passwordEror, setPasswordEror] = useState("");
     const [roleEror, setRoleEror] = useState("");
     const [urlPhotoEror, setUrlPhotoEror] = useState("");
-    const [addS,setAdds] = useState(null);
+    const [addS,setAdds] = useState("");
+    
+    
+    useEffect(() =>
+    axios.get('http://localhost:5000/users/' + props.match.params.id)
+    .then(res => {
+        console.log("res.data.id",res.data)
+        setFirsName(res.data.first_name)
+        setLastName(res.data.last_name)
+        setEmail(res.data.email)
+        setPassword(res.data.password)
+        setRole(res.data.role)
+        console.log(res.data )
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+   , []);
+    
+    
 
     
     const options=[
@@ -36,7 +57,6 @@ export default function AddUser(props) {
 
     //     }
         const handleChangeFirstName = (event) => {
-            console.log(event.target.value);
             setFirsName(event.target.value);
         };
         const handleChangeLastName = (event) => {
@@ -114,15 +134,20 @@ export default function AddUser(props) {
     
             }
             console.log(user)
+            
+        //    adduser(user).then(res => {
+        //         console.log("il est envoyer");
+                    
+        //           })
+
             const isValid = validate();  
             console.log("is valide",isValid);
-            if(!!isValid){
+            if(isValid){
                 console.log(user);
-                adduser(user).then(res => {
-                console.log("il est envoyer");
-                setAdds("Un Utilisateur Ajouté");
-                    
-                  })
+                axios.put('http://localhost:5000/users/' + props.match.params.id, user)
+                .then(res => console.log(res.data));
+                alert("Utilisateur a est modifié")
+                props.history.push('/users')
                 
             }else{
                 console.log("il a un probleme dans la validation des informations")
@@ -139,6 +164,7 @@ export default function AddUser(props) {
         return (
             <div className="db">
                     <form onSubmit={onSubmit}  class="text border border-light p-5">
+                        
                     {/* <div className={addS == null  ? 'hidden' : ''} >
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong> {addS}</strong> 
@@ -147,7 +173,7 @@ export default function AddUser(props) {
                     </button>
                     </div>
                     </div> */}
-                    <b>Add User</b>
+                    <b>Edit User</b>
                     <hr/>   
                     <div class="row">
                         <div className="col-md-6">
@@ -209,7 +235,7 @@ export default function AddUser(props) {
                                     label="Role (Required)"        
                                     style={{ width: 560 }}
                                      id="role"
-                                    // value={role}
+                                     value={role}
                                     onChange={handleChangeRole}
                                     options={options}
                                     >
@@ -217,16 +243,13 @@ export default function AddUser(props) {
                             
                                     </Select>
                                     <div style={{color:"red"}}>{roleEror}</div>
-                                    </div>
-                                    
-                            
+                                    </div>                                                              
                     </div>
                     </div>
                    
                     <div className="col-md-12">
-
-                    <button style={{float:"right"}} type="button" class="btn btn-success" onClick={onSubmit} >Ajouter</button> 
-                    <button style={{float:"right"}} type="button" class="btn btn-danger" onClick={annuler } >Annuler</button>   
+                    <button style={{float:"right"}} type="button" class="btn btn-success" onClick={onSubmit} >Edit</button> 
+                    <button style={{float:"right"}} type="button" class="btn btn-danger" onClick={annuler } >Cancel</button>   
                     </div>
 
                     </form>
